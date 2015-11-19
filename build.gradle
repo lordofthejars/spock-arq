@@ -1,0 +1,35 @@
+apply plugin: 'groovy'
+apply plugin: 'war'
+
+repositories {
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
+    }
+}
+
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.arquillian:arquillian-universe:1.0.0.Alpha1'
+    }
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.1.8'
+
+    testCompile group: 'org.arquillian.universe', name: 'arquillian-junit', ext: 'pom'
+    testCompile group: 'org.apache.openejb', name: 'arquillian-tomee-remote', version:'1.7.2'
+    testCompile group: 'org.jboss.arquillian.spock', name:'arquillian-spock-container', version:'1.0.0.Beta3'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'junit:junit:4.12'
+
+    providedCompile group: 'org.apache.openejb', name: 'javaee-api', version:'6.0-6'
+}
